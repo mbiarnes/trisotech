@@ -1,2 +1,2 @@
 # trisotech
-builds tah Jenkins job for trisotech tag
+script used by Jenkins to generate a tag for Trisotech
