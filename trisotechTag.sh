@@ -96,28 +96,17 @@ for REPOSITORY_URL in `cat $TRISO` ; do
         # create a tag
         commitMsg="Tagging $tag $DATE"
         git tag -a $tag -m "$commitMsg"
-        
-        if [ "$target" == "community" ]; then 
-           deployDir=$WORKSPACE/tristotech-deploy-dir
-           mvn -B -e clean deploy -T1C -Dfull -Drelease -Dkie.maven.settings.custom=$SETTINGS_XML_FILE -DaltDeploymentRepository=local::default::file://$deployDir -Dmaven.test.redirectTestOutputToFile=true -Dmaven.test.failure.ignore=true -Dgwt.compiler.localWorkers=2\
+
+        deployDir=$WORKSPACE/tristotech-deploy-dir
+        mvn -B -e clean deploy -T1C -Dfull -Drelease -Dkie.maven.settings.custom=$SETTINGS_XML_FILE -DaltDeploymentRepository=local::default::file://$deployDir -Dmaven.test.redirectTestOutputToFile=true -Dmaven.test.failure.ignore=true -Dgwt.compiler.localWorkers=2\
  -Dgwt.memory.settings="-Xmx4g -Xms1g -Xss1M"
-        
-        else
-           deployDir=$WORKSPACE/trisotech-deploy-dir
-           mvn -B -e clean deploy -T1C -Dfull -Drelease  -DaltDeploymentRepository=local::default::file://$deployDir -Dmaven.test.redirectTestOutputToFile=true -Dmaven.test.failure.ignore=true -Dgwt.compiler.localWorkers=3\
- -Dproductized -Dgwt.memory.settings="-Xmx4g -Xms1g -Xss1M"
-        fi
         
 
   fi       
 done  
 
 # copies binaries to nexus
-if [ "$target" == "community" ]; then
-   stagingRep=15c58a1abc895b
-else
-   stagingRep=15c3321d12936e
-fi
+stagingRep=15c58a1abc895b
 
 cd $deployDir
 # upload the content to remote staging repo
