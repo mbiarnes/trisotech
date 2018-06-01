@@ -129,7 +129,7 @@ for REPOSITORY_URL in `cat $TRISO` ; do
       echo "rep_dir="$REP_DIR
       cd $REP_DIR 
       
-      git push origin $tag
+      # git push origin $tag
       
    fi
 done
